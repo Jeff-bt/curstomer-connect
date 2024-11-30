@@ -24,6 +24,11 @@ public class CustomerService {
     public Page<CustomerEntity> findAll(Integer page, Integer pageSize, String sorter, String email, String cpf) {
         var pageRequest = getPageRequest(page, pageSize, sorter);
 
+        return findWithFilter(email, cpf, pageRequest);
+
+    }
+
+    private Page<CustomerEntity> findWithFilter(String email, String cpf, PageRequest pageRequest) {
         if (!isNull(email) && hasText(cpf)) {
             return customerRepository.findByEmailAndCpf(email, cpf, pageRequest);
         }
@@ -36,8 +41,6 @@ public class CustomerService {
         }
 
         return customerRepository.findAll(pageRequest);
-
-        //return customers.stream().map(customer -> new CustomerResponseDto(customer)).toList();
     }
 
     private PageRequest getPageRequest(Integer page, Integer pageSize, String sorter) {

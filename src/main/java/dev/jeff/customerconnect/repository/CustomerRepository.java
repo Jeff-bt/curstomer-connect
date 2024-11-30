@@ -9,11 +9,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> {
 
-    Page<CustomerEntity> findByEmailAndCpf(String email, String cpf, PageRequest pageable);
+    Page<CustomerEntity> findByEmailAndCpf(String email, String cpf, PageRequest pageRequest);
 
-    Page<CustomerEntity> findByEmail(String email, PageRequest pageable);
+    Page<CustomerEntity> findByEmail(String email, PageRequest pageRequest);
 
-    Page<CustomerEntity> findByCpf(String cpf, PageRequest pageable);
+    Page<CustomerEntity> findByCpf(String cpf, PageRequest pageRequest);
 
-    //Page<Customer> findAll(PageRequest pageRequest);
 }
