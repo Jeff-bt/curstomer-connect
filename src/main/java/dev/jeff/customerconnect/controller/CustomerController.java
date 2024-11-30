@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api")
 public class CustomerController {
@@ -35,10 +37,12 @@ public class CustomerController {
         ));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CustomerResponseDto> findById(@PathVariable Long id) {
-        CustomerResponseDto customerDto = customerService.findById(id);
-        return ResponseEntity.ok(customerDto);
+    @GetMapping(path = "/{customerId}")
+    public ResponseEntity<CustomerEntity> findById(@PathVariable("customerId") Long id) {
+        Optional<CustomerEntity> customer = customerService.findById(id);
+        return customer.isPresent() ?
+                ResponseEntity.ok(customer.get()) :
+                ResponseEntity.notFound().build();
     }
 
     @PostMapping

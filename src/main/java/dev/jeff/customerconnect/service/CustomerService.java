@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import static java.util.Objects.isNull;
 import static org.springframework.util.StringUtils.hasText;
 
@@ -51,9 +53,8 @@ public class CustomerService {
         return PageRequest.of(page, pageSize, direction, "created");
     }
 
-    public CustomerResponseDto findById(Long id) {
-        CustomerEntity customerEntity = customerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Customer not found"));
-        return new CustomerResponseDto(customerEntity);
+    public Optional<CustomerEntity> findById(Long customerId) {
+        return customerRepository.findById(customerId);
     }
 
     public CustomerResponseDto create(CustomerRequestDto cutomerDto) {
