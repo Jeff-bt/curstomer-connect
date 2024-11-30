@@ -1,6 +1,9 @@
 package dev.jeff.customerconnect.controller;
 
-import dev.jeff.customerconnect.controller.dto.*;
+import dev.jeff.customerconnect.controller.dto.ApiResponse;
+import dev.jeff.customerconnect.controller.dto.CreateCustomerDto;
+import dev.jeff.customerconnect.controller.dto.CustomerRequestDto;
+import dev.jeff.customerconnect.controller.dto.PaginationResponseDto;
 import dev.jeff.customerconnect.entity.CustomerEntity;
 import dev.jeff.customerconnect.service.CustomerService;
 import org.springframework.data.domain.Page;
@@ -49,10 +52,12 @@ public class CustomerController {
         return ResponseEntity.created(URI.create("/customers/" + customer.getId())).build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<CustomerResponseDto> update(@RequestBody CustomerRequestDto body, @PathVariable Long id) {
-        CustomerResponseDto customerDto = customerService.update(body, id);
-        return ResponseEntity.ok(customerDto);
+    @PutMapping(path = "/{customerId}")
+    public ResponseEntity<CustomerEntity> update(@RequestBody CustomerRequestDto body, @PathVariable("customerId") Long customerId) {
+        Optional<CustomerEntity> customer = customerService.update(body, customerId);
+        return customer.isPresent() ?
+                ResponseEntity.ok(customer.get()) :
+                ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
