@@ -60,10 +60,12 @@ public class CustomerController {
                 ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        customerService.delete(id);
-        return ResponseEntity.noContent().build();
+    @DeleteMapping(path = "/{customerId}")
+    public ResponseEntity<Void> delete(@PathVariable("customerId") Long customerId) {
+        boolean deleted = customerService.deleteById(customerId);
+        return deleted ?
+                ResponseEntity.noContent().build() :
+                ResponseEntity.notFound().build();
     }
 }
 
