@@ -1,5 +1,6 @@
 package dev.jeff.customerconnect.service;
 
+import dev.jeff.customerconnect.controller.dto.CreateCustomerDto;
 import dev.jeff.customerconnect.controller.dto.CustomerRequestDto;
 import dev.jeff.customerconnect.controller.dto.CustomerResponseDto;
 import dev.jeff.customerconnect.entity.CustomerEntity;
@@ -57,9 +58,9 @@ public class CustomerService {
         return customerRepository.findById(customerId);
     }
 
-    public CustomerResponseDto create(CustomerRequestDto cutomerDto) {
-        CustomerEntity customerEntity = new CustomerEntity(cutomerDto.getName(), cutomerDto.getCpf(), cutomerDto.getEmail(), cutomerDto.getPhone());
-        return new CustomerResponseDto(customerRepository.save(customerEntity));
+    public CustomerEntity create(CreateCustomerDto dto) {
+        CustomerEntity customerEntity = new CustomerEntity(dto.fullName(), dto.cpf(), dto.email(), dto.phoneNumber());
+        return customerRepository.save(customerEntity);
     }
 
 

@@ -1,15 +1,13 @@
 package dev.jeff.customerconnect.controller;
 
-import dev.jeff.customerconnect.controller.dto.ApiResponse;
-import dev.jeff.customerconnect.controller.dto.CustomerRequestDto;
-import dev.jeff.customerconnect.controller.dto.CustomerResponseDto;
-import dev.jeff.customerconnect.controller.dto.PaginationResponse;
+import dev.jeff.customerconnect.controller.dto.*;
 import dev.jeff.customerconnect.entity.CustomerEntity;
 import dev.jeff.customerconnect.service.CustomerService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.Optional;
 
 @RestController
@@ -33,7 +31,7 @@ public class CustomerController {
         Page<CustomerEntity> pageResp = customerService.findAll(page, pageSize, orderBy, email, cpf);
         return ResponseEntity.ok(new ApiResponse<>(
                 pageResp.getContent(),
-                new PaginationResponse(pageResp.getNumber(), pageResp.getSize(), pageResp.getTotalElements(), pageResp.getTotalPages())
+                new PaginationResponseDto(pageResp.getNumber(), pageResp.getSize(), pageResp.getTotalElements(), pageResp.getTotalPages())
         ));
     }
 
@@ -46,9 +44,9 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerResponseDto> create(@RequestBody CustomerRequestDto body) {
-        CustomerResponseDto customerDto = customerService.create(body);
-        return ResponseEntity.ok(customerDto);
+    public ResponseEntity<Void> create(@RequestBody CreateCustomerDto body) {
+        CustomerEntity customer = customerService.create(body);
+        return ResponseEntity.created(URI.create("/customers/" + customer.getId())).build();
     }
 
     @PutMapping("/{id}")
