@@ -1,4 +1,4 @@
-package dev.jeff.customerconnect.dto;
+package dev.jeff.customerconnect.controller.dto;
 
 import dev.jeff.customerconnect.entity.CustomerEntity;
 

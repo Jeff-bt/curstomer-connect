@@ -1,7 +1,7 @@
 package dev.jeff.customerconnect.service;
 
-import dev.jeff.customerconnect.dto.CustomerRequestDto;
-import dev.jeff.customerconnect.dto.CustomerResponseDto;
+import dev.jeff.customerconnect.controller.dto.CustomerRequestDto;
+import dev.jeff.customerconnect.controller.dto.CustomerResponseDto;
 import dev.jeff.customerconnect.entity.CustomerEntity;
 import dev.jeff.customerconnect.repository.CustomerRepository;
 import org.springframework.data.domain.Page;
