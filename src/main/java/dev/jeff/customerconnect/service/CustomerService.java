@@ -2,7 +2,7 @@ package dev.jeff.customerconnect.service;
 
 import dev.jeff.customerconnect.dto.CustomerRequestDto;
 import dev.jeff.customerconnect.dto.CustomerResponseDto;
-import dev.jeff.customerconnect.entity.Customer;
+import dev.jeff.customerconnect.entity.CustomerEntity;
 import dev.jeff.customerconnect.repository.CustomerRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +21,7 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public Page<Customer> findAll(Integer page, Integer pageSize, String sorter, String email, String cpf) {
+    public Page<CustomerEntity> findAll(Integer page, Integer pageSize, String sorter, String email, String cpf) {
         var pageRequest = getPageRequest(page, pageSize, sorter);
 
         if (!isNull(email) && hasText(cpf)) {
@@ -49,23 +49,23 @@ public class CustomerService {
     }
 
     public CustomerResponseDto findById(Long id) {
-        Customer customer = customerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Customer not found"));
-        return new CustomerResponseDto(customer);
+        CustomerEntity customerEntity = customerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Customer not found"));
+        return new CustomerResponseDto(customerEntity);
     }
 
     public CustomerResponseDto create(CustomerRequestDto cutomerDto) {
-        Customer customer = new Customer(cutomerDto.getName(), cutomerDto.getCpf(), cutomerDto.getEmail(), cutomerDto.getPhone());
-        return new CustomerResponseDto(customerRepository.save(customer));
+        CustomerEntity customerEntity = new CustomerEntity(cutomerDto.getName(), cutomerDto.getCpf(), cutomerDto.getEmail(), cutomerDto.getPhone());
+        return new CustomerResponseDto(customerRepository.save(customerEntity));
     }
 
 
     public CustomerResponseDto update(CustomerRequestDto body, Long id) {
-        Customer customer = customerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Customer not found"));
-        customer.setName(body.getName());
-        customer.setCpf(body.getCpf());
-        customer.setEmail(body.getEmail());
-        customer.setPhone(body.getPhone());
-        return new CustomerResponseDto(customerRepository.save(customer));
+        CustomerEntity customerEntity = customerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Customer not found"));
+        customerEntity.setFullName(body.getName());
+        customerEntity.setCpf(body.getCpf());
+        customerEntity.setEmail(body.getEmail());
+        customerEntity.setPhoneNumber(body.getPhone());
+        return new CustomerResponseDto(customerRepository.save(customerEntity));
     }
 
     public void delete(Long id) {

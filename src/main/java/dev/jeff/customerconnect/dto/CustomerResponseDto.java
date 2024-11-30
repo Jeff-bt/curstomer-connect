@@ -1,8 +1,8 @@
 package dev.jeff.customerconnect.dto;
 
-import dev.jeff.customerconnect.entity.Customer;
+import dev.jeff.customerconnect.entity.CustomerEntity;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class CustomerResponseDto {
     private Long id;
@@ -10,17 +10,17 @@ public class CustomerResponseDto {
     private String cpf;
     private String email;
     private String phone;
-    private Timestamp created;
-    private Timestamp updated;
+    private LocalDateTime created;
+    private LocalDateTime updated;
 
-    public CustomerResponseDto(Customer entity) {
+    public CustomerResponseDto(CustomerEntity entity) {
         this.id = entity.getId();
-        this.name = entity.getName();
+        this.name = entity.getFullName();
         this.cpf = entity.getCpf();
         this.email = entity.getEmail();
-        this.phone = entity.getPhone();
-        this.created = entity.getCreated();
-        this.updated = entity.getUpdated();
+        this.phone = entity.getPhoneNumber();
+        this.created = entity.getCreatedAt();
+        this.updated = entity.getUpdatedAt();
     }
 
     public Long getId() {
@@ -63,19 +63,19 @@ public class CustomerResponseDto {
         this.phone = phone;
     }
 
-    public Timestamp getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(Timestamp created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
-    public Timestamp getUpdated() {
+    public LocalDateTime getUpdated() {
         return updated;
     }
 
-    public void setUpdated(Timestamp updated) {
+    public void setUpdated(LocalDateTime updated) {
         this.updated = updated;
     }
 }

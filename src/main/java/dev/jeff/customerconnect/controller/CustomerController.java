@@ -2,7 +2,7 @@ package dev.jeff.customerconnect.controller;
 
 import dev.jeff.customerconnect.dto.CustomerRequestDto;
 import dev.jeff.customerconnect.dto.CustomerResponseDto;
-import dev.jeff.customerconnect.entity.Customer;
+import dev.jeff.customerconnect.entity.CustomerEntity;
 import dev.jeff.customerconnect.service.CustomerService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +19,14 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Customer>> findAll(@RequestParam(name = "page", defaultValue = "0") Integer page,
-                                                  @RequestParam(name = "pageSize", defaultValue = "3") Integer pageSize,
-                                                  @RequestParam(name = "sorter", defaultValue = "Desc") String sorter,
-                                                  @RequestParam(name = "email", required = false) String email,
-                                                  @RequestParam(name = "cpf", required = false) String cpf
+    public ResponseEntity<Page<CustomerEntity>> findAll(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                                                        @RequestParam(name = "pageSize", defaultValue = "3") Integer pageSize,
+                                                        @RequestParam(name = "sorter", defaultValue = "Desc") String sorter,
+                                                        @RequestParam(name = "email", required = false) String email,
+                                                        @RequestParam(name = "cpf", required = false) String cpf
     ) {
 
-        Page<Customer> customers = customerService.findAll(page, pageSize, sorter, email, cpf);
+        Page<CustomerEntity> customers = customerService.findAll(page, pageSize, sorter, email, cpf);
         return ResponseEntity.ok(customers);
     }
 
