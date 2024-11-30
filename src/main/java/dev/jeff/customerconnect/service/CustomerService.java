@@ -50,7 +50,7 @@ public class CustomerService {
         if (sorter.equalsIgnoreCase("asc")) {
             direction = Sort.Direction.ASC;
         }
-        return PageRequest.of(page, pageSize, direction, "created");
+        return PageRequest.of(page, pageSize, direction, "fullName");
     }
 
     public Optional<CustomerEntity> findById(Long customerId) {
