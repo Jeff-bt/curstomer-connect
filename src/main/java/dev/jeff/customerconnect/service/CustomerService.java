@@ -1,7 +1,7 @@
 package dev.jeff.customerconnect.service;
 
 import dev.jeff.customerconnect.controller.dto.CreateCustomerDto;
-import dev.jeff.customerconnect.controller.dto.CustomerRequestDto;
+import dev.jeff.customerconnect.controller.dto.UpdateCustomerDto;
 import dev.jeff.customerconnect.entity.CustomerEntity;
 import dev.jeff.customerconnect.repository.CustomerRepository;
 import org.springframework.data.domain.Page;
@@ -63,15 +63,14 @@ public class CustomerService {
     }
 
 
-    public Optional<CustomerEntity> update(CustomerRequestDto body, Long id) {
+    public Optional<CustomerEntity> update(UpdateCustomerDto body, Long id) {
 
         var customer = customerRepository.findById(id);
 
         if (customer.isPresent()) {
-            customer.get().setFullName(body.getName());
-            customer.get().setCpf(body.getCpf());
-            customer.get().setEmail(body.getEmail());
-            customer.get().setPhoneNumber(body.getPhone());
+            customer.get().setFullName(body.fullName());
+            customer.get().setEmail(body.email());
+            customer.get().setPhoneNumber(body.phoneNumber());
 
             customerRepository.save(customer.get());
         }
