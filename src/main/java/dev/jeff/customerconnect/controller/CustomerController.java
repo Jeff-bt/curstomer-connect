@@ -1,6 +1,6 @@
 package dev.jeff.customerconnect.controller;
 
-import dev.jeff.customerconnect.controller.dto.ApiResponse;
+import dev.jeff.customerconnect.controller.dto.ApiResponseDto;
 import dev.jeff.customerconnect.controller.dto.CreateCustomerDto;
 import dev.jeff.customerconnect.controller.dto.PaginationResponseDto;
 import dev.jeff.customerconnect.controller.dto.UpdateCustomerDto;
@@ -24,15 +24,15 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<CustomerEntity>> findAll(@RequestParam(name = "page", defaultValue = "0") Integer page,
-                                                               @RequestParam(name = "pageSize", defaultValue = "3") Integer pageSize,
-                                                               @RequestParam(name = "orderBy", defaultValue = "desc") String orderBy,
-                                                               @RequestParam(name = "email", required = false) String email,
-                                                               @RequestParam(name = "cpf", required = false) String cpf
+    public ResponseEntity<ApiResponseDto<CustomerEntity>> findAll(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                                                                  @RequestParam(name = "pageSize", defaultValue = "3") Integer pageSize,
+                                                                  @RequestParam(name = "orderBy", defaultValue = "desc") String orderBy,
+                                                                  @RequestParam(name = "email", required = false) String email,
+                                                                  @RequestParam(name = "cpf", required = false) String cpf
     ) {
 
         Page<CustomerEntity> pageResp = customerService.findAll(page, pageSize, orderBy, email, cpf);
-        return ResponseEntity.ok(new ApiResponse<>(
+        return ResponseEntity.ok(new ApiResponseDto<>(
                 pageResp.getContent(),
                 new PaginationResponseDto(pageResp.getNumber(), pageResp.getSize(), pageResp.getTotalElements(), pageResp.getTotalPages())
         ));
